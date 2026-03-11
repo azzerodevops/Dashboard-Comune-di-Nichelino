@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useRef } from "react";
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
@@ -255,8 +254,6 @@ const pctBadgeStyles: Record<string, string> = {
 /* ─────────────────────────── PAGE ─────────────────────────── */
 
 export default function HomePage() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
   return (
     <div className="min-h-screen scroll-smooth">
       {/* ══════════════ NAVBAR ══════════════ */}
@@ -281,19 +278,13 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* ══════════════ SECTION 1: VIDEO HERO ══════════════ */}
+      {/* ══════════════ SECTION 1: IMAGE HERO ══════════════ */}
       <section className="relative flex h-screen items-center justify-center overflow-hidden">
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster="/piazza-nichelino.jpg"
+        <img
+          src="/piazza-nichelino.jpg"
+          alt="Piazza di Nichelino"
           className="absolute inset-0 h-full w-full object-cover"
-        >
-          <source src="/nichelino-drone.mp4" type="video/mp4" />
-        </video>
+        />
 
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/60" />
 
@@ -608,14 +599,19 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ══════════════ SECTION 4b: TERRITORY PHOTO ══════════════ */}
+      {/* ══════════════ SECTION 4b: TERRITORY VIDEO ══════════════ */}
       <section className="relative overflow-hidden">
         <div className="relative h-[400px] sm:h-[480px]">
-          <img
-            src="/piazza-nichelino.jpg"
-            alt="Piazza di Nichelino al tramonto"
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="/piazza-nichelino.jpg"
             className="absolute inset-0 h-full w-full object-cover"
-          />
+          >
+            <source src="/nichelino-drone.mp4" type="video/mp4" />
+          </video>
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
           <div className="absolute inset-x-0 bottom-0 p-8 sm:p-12">
             <motion.div
