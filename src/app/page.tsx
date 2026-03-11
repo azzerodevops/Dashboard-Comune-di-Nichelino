@@ -608,6 +608,43 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ══════════════ SECTION 4b: TERRITORY PHOTO ══════════════ */}
+      <section className="relative overflow-hidden">
+        <div className="relative h-[400px] sm:h-[480px]">
+          <img
+            src="/piazza-nichelino.jpg"
+            alt="Piazza di Nichelino al tramonto"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 p-8 sm:p-12">
+            <motion.div
+              className="mx-auto max-w-6xl"
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              <p className="text-sm font-medium uppercase tracking-widest text-white/60">
+                Il nostro territorio
+              </p>
+              <h2 className="mt-2 text-3xl font-bold text-white sm:text-4xl">
+                Nichelino, Città Metropolitana di Torino
+              </h2>
+              <div className="mt-4 flex flex-wrap gap-4 text-sm text-white/70">
+                <span>46.006 abitanti</span>
+                <span className="text-white/30">·</span>
+                <span>20,62 km²</span>
+                <span className="text-white/30">·</span>
+                <span>229 m s.l.m.</span>
+                <span className="text-white/30">·</span>
+                <span>Zona climatica E</span>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* ══════════════ SECTION 5: SEVEN MACROTEMI ══════════════ */}
       <section className="bg-white py-24 sm:py-32">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
