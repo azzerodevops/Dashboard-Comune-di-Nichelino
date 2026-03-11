@@ -1,6 +1,17 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+// Only these paths require authentication
+const PROTECTED_PATTERNS = [
+  /^\/monitoraggio/,
+  /^\/dashboard\/mitigazione\/[^/]+\/aggiorna/,
+  /^\/dashboard\/adattamento\/[^/]+\/aggiorna/,
+];
+
+function isProtectedRoute(pathname: string): boolean {
+  return PROTECTED_PATTERNS.some((pattern) => pattern.test(pathname));
+}
+
 export async function middleware(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
@@ -25,14 +36,13 @@ export async function middleware(request: NextRequest) {
     },
   );
 
+  // Always refresh the session (needed for Supabase SSR)
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (
-    !user &&
-    request.nextUrl.pathname.startsWith("/dashboard")
-  ) {
+  // Only redirect to login for protected routes (monitoraggio area)
+  if (!user && isProtectedRoute(request.nextUrl.pathname)) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);
