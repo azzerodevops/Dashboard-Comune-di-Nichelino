@@ -36,7 +36,7 @@ function getStatoLabel(stato: string) {
   return STATI_AZIONE.find((s) => s.value === stato)?.label ?? stato;
 }
 
-function formatIndicatori(indicatori: Record<string, any>): string {
+function formatIndicatori(indicatori: Record<string, string | number | boolean>): string {
   if (!indicatori || Object.keys(indicatori).length === 0) return "\u2014";
   return Object.entries(indicatori)
     .map(([k, v]) => {

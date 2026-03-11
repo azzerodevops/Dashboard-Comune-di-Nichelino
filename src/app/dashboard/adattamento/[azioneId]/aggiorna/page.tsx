@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
@@ -120,25 +120,27 @@ export default function AggiornamentoPage() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [indicatoriValues, setIndicatoriValues] = useState<Record<string, any>>({});
 
-  const fetchAzione = useCallback(async () => {
-    setLoading(true);
-    const supabase = createClient();
-    const { data, error } = await supabase
-      .from("azioni_adattamento")
-      .select("*")
-      .eq("id", azioneId)
-      .single<AzioneAdattamento>();
-    if (error || !data) {
-      toast.error("Azione non trovata");
-    } else {
-      setAzione(data);
-    }
-    setLoading(false);
-  }, [azioneId]);
-
   useEffect(() => {
-    fetchAzione();
-  }, [fetchAzione]);
+    let cancelled = false;
+    const load = async () => {
+      setLoading(true);
+      const supabase = createClient();
+      const { data, error } = await supabase
+        .from("azioni_adattamento")
+        .select("*")
+        .eq("id", azioneId)
+        .single<AzioneAdattamento>();
+      if (cancelled) return;
+      if (error || !data) {
+        toast.error("Azione non trovata");
+      } else {
+        setAzione(data);
+      }
+      setLoading(false);
+    };
+    load();
+    return () => { cancelled = true; };
+  }, [azioneId]);
 
   const indicatoriDef = INDICATORI_PER_AZIONE[azioneId] ?? [];
   const hasIndicators = indicatoriDef.length > 0;

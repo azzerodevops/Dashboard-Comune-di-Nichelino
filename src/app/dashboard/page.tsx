@@ -127,13 +127,13 @@ export default async function DashboardPage() {
       trendMap.set(year, (trendMap.get(year) ?? 0) + agg.tco2_effettive);
     }
   }
-  let cumulative = 0;
   const trendData = [...trendMap.entries()]
     .sort(([a], [b]) => a.localeCompare(b))
-    .map(([year, val]) => {
-      cumulative += val;
-      return { data: year, tco2_cumulate: cumulative };
-    });
+    .reduce<{ data: string; tco2_cumulate: number }[]>((acc, [year, val]) => {
+      const prev = acc.length > 0 ? acc[acc.length - 1].tco2_cumulate : 0;
+      acc.push({ data: year, tco2_cumulate: prev + val });
+      return acc;
+    }, []);
 
   // Build data for GraficoRiduzionePerMacrotema
   const riduzioneData = macrotemi.map((m) => {

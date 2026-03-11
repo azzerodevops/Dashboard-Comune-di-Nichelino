@@ -406,7 +406,7 @@ export default async function AdattamentoPage() {
             const tend = getTendenzaBadge(r.tendenza);
             const highlight = isHighRisk(r.livello);
             const PericoloIcon = getPericoloIcon(r.pericolo);
-            const impatto = 'impatto' in r ? (r as any).impatto : r.livello;
+            const impatto = 'impatto' in r ? (r as RischioClimatico & { impatto?: string }).impatto : r.livello;
 
             return (
               <Card
@@ -526,7 +526,7 @@ export default async function AdattamentoPage() {
                 {sortedRischi.map((r) => {
                   const tend = getTendenzaBadge(r.tendenza);
                   const highlight = isHighRisk(r.livello);
-                  const impatto = 'impatto' in r ? (r as any).impatto : r.livello;
+                  const impatto = 'impatto' in r ? (r as RischioClimatico & { impatto?: string }).impatto : r.livello;
 
                   return (
                     <TableRow

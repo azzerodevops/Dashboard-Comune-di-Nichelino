@@ -44,7 +44,7 @@ export type AggiornamentoMitigazione = {
   classe_energetica_post: string | null;
   note: string | null;
   operatore: string | null;
-  allegati: any[];
+  allegati: Record<string, unknown>[];
 };
 
 export type AzioneAdattamento = {
@@ -64,11 +64,11 @@ export type AggiornamentoAdattamento = {
   data_aggiornamento: string;
   stato: "pianificato" | "in_corso" | "completato" | "sospeso";
   percentuale_completamento: number;
-  indicatori: Record<string, any>;
+  indicatori: Record<string, string | number | boolean>;
   investimento_effettivo: number | null;
   note: string | null;
   operatore: string | null;
-  allegati: any[];
+  allegati: Record<string, unknown>[];
 };
 
 export type RischioClimatico = {
